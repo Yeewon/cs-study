@@ -5,12 +5,11 @@
 - 24시간 동작 해야한다.
 - 고정된 IP 주소를 갖는다.
 - 거의 모든 서비스는 80번 port를 사용한다. why? 찾아가기 쉽도록.
-
 - What transport service does an app need? (4가지)
-  1. data integrity : 데이터 유실 없이 온전하게 목적지까지 도착
-  2. timing : 언제까지 도달했으면 좋겠는지 (시간)
-  3. throughput : 최소 용량 (양)
-  4. security : 안전하게 도착
+  - data integrity : 데이터 유실 없이 온전하게 목적지까지 도착
+  - timing : 언제까지 도달했으면 좋겠는지 (시간)
+  - throughput : 최소 용량 (양)
+  - security : 안전하게 도착
 
 **transport layer는 data integrity에 대한 서비스만 제공해준다.**
 
