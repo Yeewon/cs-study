@@ -46,7 +46,8 @@
 
 - 매번 페이지 요청마다 새로고침되므로 사용자 UX에 좋지 않다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/da616837-7bb5-403b-9ffa-e6af9880f9b7/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/da616837-7bb5-403b-9ffa-e6af9880f9b7/Untitled.png)
+![ssr](https://user-images.githubusercontent.com/39365737/153703463-4aed99f4-883d-40bc-8644-24dc91319f6b.png)
+
 
 [NAVER D2](https://d2.naver.com/helloworld/7804182)
 
@@ -69,7 +70,8 @@ SSR 도입편
 - javascript가 실행될 때까지 페이지가 비어있어서, javascript 파일이 아직 캐싱되지 않은 사용자는 **아주 짧은 시간동안 흰 페이지가 나타난다**.
 - 유저가 실제로 방문하지 않을 수도 있는 페이지에 관련된 렌더링 관런 스크립트도 불러오기때문에, 필요한 페이지보다 더 무거운 자바스크립트 파일을 읽어야할 수 있다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/187ca194-df2a-4d4f-b397-76cd48816a8b/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/187ca194-df2a-4d4f-b397-76cd48816a8b/Untitled.png)
+![csr](https://user-images.githubusercontent.com/39365737/153703473-86569ebe-09cc-400f-b916-bc0930598061.png)
+
 
 ## SEO (Search Engine Optimization) 문제
 
@@ -77,7 +79,8 @@ SSR 도입편
 - 이를 해결하기 위해 SSR with Hydration 기법이 나왔다.
   > React 진영의 `Next.js`와 Vue 진영의 `Nuxt.js`가 위 기법을 구현한 프레임 워크다.
     <aside>
-    💡  **SSR with Hydration 기법** 
+    💡  SSR with Hydration 기법
+  
     처음엔 서버사이드 렌더링을 하고, 그 후 다른 페이지들에선 클라이언트 사이드 렌더링을 이용하는 방식
     
     </aside>
