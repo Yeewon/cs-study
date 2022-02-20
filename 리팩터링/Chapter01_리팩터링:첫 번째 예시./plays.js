@@ -8,6 +8,10 @@ const statement = (invoice, plays) => {
     minimumFractionDigits: 2,
   }).format;
 
+  const playFor = (aPerformance) => {
+    return plays[aPerformance.playID];
+  };
+
   for (let perf of invoice.performances) {
     const play = playFor(performance);
     let thisAmount = amountFor(perf, play);
@@ -23,10 +27,6 @@ const statement = (invoice, plays) => {
   result += `총액: ${format(totalAmount / 100)}\n`;
   result += `적립 포인트: ${volumeCredits}점\n`;
   return result;
-};
-
-const playFor = (aPerformance) => {
-  return plays[aPerformance.playID];
 };
 
 const amountFor = (aPerformance, play) => {
