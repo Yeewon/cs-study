@@ -1,6 +1,5 @@
 const statement = (invoice, plays) => {
   let totalAmount = 0;
-  let volumeCredits = 0;
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
   const usd = (aNumber) => {
@@ -56,6 +55,7 @@ const statement = (invoice, plays) => {
     totalAmount += amountFor(perf);
   }
 
+  let volumeCredits = 0;
   for (let perf of invoice.performances) {
     volumeCredits += volumeCreditsFor(perf);
   }
