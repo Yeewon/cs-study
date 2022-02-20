@@ -37,11 +37,16 @@ const statement = (invoice, plays) => {
     return result;
   };
 
-  for (let perf of invoice.performances) {
+  const volumeCreditsFor = (perf) => {
+    let volumeCredits = 0;
+
     volumeCredits += Math.max(perf.audience - 30, 0);
     if ("comedy" === playFor(performance).type)
       volumeCredits += Math.floor(perf.audience / 5);
+  };
 
+  for (let perf of invoice.performances) {
+    volumeCredits += volumeCreditsFor(perf);
     result += ` ${playFor(performance).name}: ${format(
       amountFor(perf) / 100
     )} (${perf.audience}석)\n`;
