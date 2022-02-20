@@ -38,16 +38,14 @@ const statement = (invoice, plays) => {
   };
 
   for (let perf of invoice.performances) {
-    let thisAmount = amountFor(perf);
-
     volumeCredits += Math.max(perf.audience - 30, 0);
     if ("comedy" === playFor(performance).type)
       volumeCredits += Math.floor(perf.audience / 5);
 
-    result += ` ${playFor(performance).name}: ${format(thisAmount / 100)} (${
-      perf.audience
-    }석)\n`;
-    totalAmount += thisAmount;
+    result += ` ${playFor(performance).name}: ${format(
+      amountFor(perf) / 100
+    )} (${perf.audience}석)\n`;
+    totalAmount += amountFor(perf);
   }
   result += `총액: ${format(totalAmount / 100)}\n`;
   result += `적립 포인트: ${volumeCredits}점\n`;
