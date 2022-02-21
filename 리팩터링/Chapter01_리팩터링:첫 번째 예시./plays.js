@@ -6,32 +6,12 @@ const statement = (invoice, plays) => {
   const enrichPerformance = () => {
     const result = Object.assign({}, aPerformance);
     result.play = playFor(result);
+    result.amount = amountFor(result);
     return result;
   };
 
   const playFor = (aPerformance) => {
     return plays[aPerformance.playID];
-  };
-
-  return renderPlainText(statementData, plays);
-};
-
-const renderPlainText = (data, plays) => {
-  let result = `청구 내역 (고객명: ${data.customer})\n`;
-  for (let perf of data.performances) {
-    result += ` ${perf.play.name}: ${usd(amountFor(perf))} (${
-      perf.audience
-    }석)\n`;
-  }
-  result += `총액: ${usd(totalAmount())}\n`;
-  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
-
-  const usd = (aNumber) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(aNumber / 100);
   };
 
   const amountFor = (aPerformance) => {
@@ -59,6 +39,25 @@ const renderPlainText = (data, plays) => {
     return result;
   };
 
+  return renderPlainText(statementData, plays);
+};
+
+const renderPlainText = (data, plays) => {
+  let result = `청구 내역 (고객명: ${data.customer})\n`;
+  for (let perf of data.performances) {
+    result += ` ${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
+  }
+  result += `총액: ${usd(totalAmount())}\n`;
+  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
+
+  const usd = (aNumber) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(aNumber / 100);
+  };
+
   const volumeCreditsFor = (aPerformance) => {
     let result = 0;
 
@@ -82,7 +81,7 @@ const renderPlainText = (data, plays) => {
     let result = 0;
 
     for (let perf of data.performances) {
-      result += amountFor(perf);
+      result += perf.amount;
     }
 
     return result;
