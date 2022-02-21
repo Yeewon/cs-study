@@ -44,7 +44,7 @@ const createStatementData = (invoice, plays) => {
     );
     const result = Object.assign({}, aPerformance);
     result.play = playFor(result);
-    result.amount = amountFor(result);
+    result.amount = calculator.amount;
     result.volumeCredits = volumeCreditsFor(result);
     return result;
   };
