@@ -13,6 +13,22 @@ const statement = (invoice, plays) => {
     return result;
   };
 
+  const totalAmount = (data) => {
+    return data.performances.reduce((total, p) => total + p.amount, 0);
+  };
+  const totalVolumeCredits = (data) => {
+    return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
+  };
+
+  const volumeCreditsFor = (aPerformance) => {
+    let result = 0;
+
+    result += Math.max(aPerformance.audience - 30, 0);
+    if ("comedy" === aPerformance.play.type)
+      result += Math.floor(aPerformance.audience / 5);
+    return result;
+  };
+
   const playFor = (aPerformance) => {
     return plays[aPerformance.playID];
   };
@@ -38,37 +54,6 @@ const statement = (invoice, plays) => {
       default:
         throw new Error(`알 수 없는 장르: ${aPerformance.play.type}`);
     }
-
-    const totalAmount = (data) => {
-      let result = 0;
-
-      for (let perf of data.performances) {
-        result += perf.amount;
-      }
-
-      return result;
-    };
-
-    const totalVolumeCredits = (data) => {
-      let result = 0;
-
-      for (let perf of data.performances) {
-        result += perf.volumeCredits;
-      }
-
-      return result;
-    };
-
-    return result;
-  };
-
-  const volumeCreditsFor = (aPerformance) => {
-    let result = 0;
-
-    result += Math.max(aPerformance.audience - 30, 0);
-    if ("comedy" === aPerformance.play.type)
-      result += Math.floor(aPerformance.audience / 5);
-    return result;
   };
 
   return renderPlainText(statementData, plays);
