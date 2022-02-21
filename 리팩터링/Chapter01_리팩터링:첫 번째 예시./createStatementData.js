@@ -13,7 +13,10 @@ const createStatementData = (invoice, plays) => {
   statementData.totalVolumeCredits = totalVolumeCredits(statementData);
 
   const enrichPerformance = () => {
-    const calculator = new PerformanceCalculator(aPerformance);
+    const calculator = new PerformanceCalculator(
+      aPerformance,
+      playFor(aPerformance)
+    );
     const result = Object.assign({}, aPerformance);
     result.play = playFor(result);
     result.amount = amountFor(result);
