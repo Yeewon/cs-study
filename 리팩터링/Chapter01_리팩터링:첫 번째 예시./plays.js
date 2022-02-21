@@ -1,10 +1,13 @@
 const statement = (invoice, plays) => {
-  return renderPlainText(invoice, plays);
+  const statementData = {};
+  statementData.customer = invoice.customer;
+  statementData.performances = invoice.performances;
+  return renderPlainText(statementData, plays);
 };
 
-const renderPlainText = (invoice, plays) => {
-  let result = `청구 내역 (고객명: ${invoice.customer})\n`;
-  for (let perf of invoice.performances) {
+const renderPlainText = (data, plays) => {
+  let result = `청구 내역 (고객명: ${data.customer})\n`;
+  for (let perf of data.performances) {
     result += ` ${playFor(performance).name}: ${usd(amountFor(perf))} (${
       perf.audience
     }석)\n`;
@@ -61,7 +64,7 @@ const renderPlainText = (invoice, plays) => {
   const totalVolumeCredits = () => {
     let result = 0;
 
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
       result += volumeCreditsFor(perf);
     }
 
@@ -71,7 +74,7 @@ const renderPlainText = (invoice, plays) => {
   const totalAmount = () => {
     let result = 0;
 
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
       result += amountFor(perf);
     }
 
