@@ -1,4 +1,4 @@
-import { createStatementData } from "./plays";
+import createStatementData from "./createStatementData";
 
 const statement = (invoice, plays) => {
   return renderPlainText(createStatementData(invoice, plays));
