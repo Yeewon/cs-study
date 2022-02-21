@@ -5,7 +5,12 @@ const statement = (invoice, plays) => {
 
   const enrichPerformance = () => {
     const result = Object.assign({}, aPerformance);
+    result.play = playFor(result);
     return result;
+  };
+
+  const playFor = (aPerformance) => {
+    return plays[aPerformance.playID];
   };
 
   return renderPlainText(statementData, plays);
@@ -14,7 +19,7 @@ const statement = (invoice, plays) => {
 const renderPlainText = (data, plays) => {
   let result = `청구 내역 (고객명: ${data.customer})\n`;
   for (let perf of data.performances) {
-    result += ` ${playFor(performance).name}: ${usd(amountFor(perf))} (${
+    result += ` ${perf.play.name}: ${usd(amountFor(perf))} (${
       perf.audience
     }석)\n`;
   }
@@ -29,14 +34,10 @@ const renderPlainText = (data, plays) => {
     }).format(aNumber / 100);
   };
 
-  const playFor = (aPerformance) => {
-    return plays[aPerformance.playID];
-  };
-
   const amountFor = (aPerformance) => {
     let result = 0;
 
-    switch (playFor(performance).type) {
+    switch (aPerformance.play.type) {
       case "tragedy": // 비극
         result = 40000;
         if (aPerformance.audience > 30) {
@@ -52,7 +53,7 @@ const renderPlainText = (data, plays) => {
         break;
 
       default:
-        throw new Error(`알 수 없는 장르: ${playFor(performance).type}`);
+        throw new Error(`알 수 없는 장르: ${aPerformance.play.type}`);
     }
 
     return result;
@@ -62,7 +63,7 @@ const renderPlainText = (data, plays) => {
     let result = 0;
 
     result += Math.max(aPerformance.audience - 30, 0);
-    if ("comedy" === playFor(aPerformance).type)
+    if ("comedy" === aPerformance.play.type)
       result += Math.floor(aPerformance.audience / 5);
     return result;
   };
