@@ -2,6 +2,8 @@ const statement = (invoice, plays) => {
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformance);
+  statementData.totalAmount = totalAmount(statementData);
+  statementData.totalVolumeCredits = totalVolumeCredits(statementData);
 
   const enrichPerformance = () => {
     const result = Object.assign({}, aPerformance);
@@ -37,6 +39,26 @@ const statement = (invoice, plays) => {
         throw new Error(`알 수 없는 장르: ${aPerformance.play.type}`);
     }
 
+    const totalAmount = (data) => {
+      let result = 0;
+
+      for (let perf of data.performances) {
+        result += perf.amount;
+      }
+
+      return result;
+    };
+
+    const totalVolumeCredits = (data) => {
+      let result = 0;
+
+      for (let perf of data.performances) {
+        result += perf.volumeCredits;
+      }
+
+      return result;
+    };
+
     return result;
   };
 
@@ -57,8 +79,8 @@ const renderPlainText = (data, plays) => {
   for (let perf of data.performances) {
     result += ` ${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
   }
-  result += `총액: ${usd(totalAmount())}\n`;
-  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
+  result += `총액: ${usd(data.totalAmount)}\n`;
+  result += `적립 포인트: ${data.totalVolumeCredits}점\n`;
 
   const usd = (aNumber) => {
     return new Intl.NumberFormat("en-US", {
@@ -66,26 +88,6 @@ const renderPlainText = (data, plays) => {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(aNumber / 100);
-  };
-
-  const totalVolumeCredits = () => {
-    let result = 0;
-
-    for (let perf of data.performances) {
-      result += perf.volumeCredits;
-    }
-
-    return result;
-  };
-
-  const totalAmount = () => {
-    let result = 0;
-
-    for (let perf of data.performances) {
-      result += perf.amount;
-    }
-
-    return result;
   };
 
   return result;
